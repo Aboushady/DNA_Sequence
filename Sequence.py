@@ -34,6 +34,22 @@ class Sequence:
                 if key == seq_ls[i]:
                     seq_ls[i] = value
         complement_dna_str = str(seq_ls)
-        seq_obj = Sequence()
-        seq_obj.seq_str = complement_dna_str
+        seq_obj = Sequence(complement_dna_str)
         return seq_obj
+
+    def find_non_matching_bases(self, other_obj):
+        this_ls, other_ls = list(self.seq_str), list(other_obj.seq_str)
+        if len(this_ls) == len(other_ls):
+            for i in range(this_ls):
+                if this_ls[i] != other_ls[i]:
+                    return i
+        else:
+            raise Exception('cannot compare sequences of different lengths')
+        return -1
+
+    def compare_dna_seq(self, genes_ls_01, genes_ls_02):
+        swap_ls = []
+        for i in range(len(genes_ls_01)):
+            swap_ls.append([j for j in range(len(genes_ls_01[i])) if genes_ls_01[i][j] != genes_ls_02[i][j]])
+        swap_ls_len = [len(swap_ls[i]) for i in range(len(swap_ls))]
+        return swap_ls_len
